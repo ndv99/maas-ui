@@ -88,7 +88,7 @@
     "@percy/cypress": "3.1.1",
     "@testing-library/cypress": "8.0.2",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.5",
+    "@testing-library/react": "13.3.0",
     "@testing-library/react-hooks": "8.0.0",
     "@testing-library/user-event": "14.2.0",
     "@types/clone-deep": "4.0.1",
