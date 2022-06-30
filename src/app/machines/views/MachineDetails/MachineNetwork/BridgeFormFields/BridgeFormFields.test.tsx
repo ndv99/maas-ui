@@ -1,4 +1,6 @@
-import { mount } from "enzyme";
+// import { mount } from "enzyme";
+import { within, screen, render, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Formik } from "formik";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
@@ -14,7 +16,7 @@ const mockStore = configureStore();
 describe("BridgeFormFields", () => {
   it("does not display the fd field if stp isn't on", async () => {
     const store = mockStore(rootStateFactory());
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter
           initialEntries={[{ pathname: "/machines", key: "testKey" }]}
@@ -25,12 +27,14 @@ describe("BridgeFormFields", () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(wrapper.find("FormikField[name='bridge_fd']").exists()).toBe(false);
+    expect(
+      screen.queryByLabelText("Forward delay (ms)")
+    ).not.toBeInTheDocument();
   });
 
   it("displays the fd field if stp is on", async () => {
     const store = mockStore(rootStateFactory());
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter
           initialEntries={[{ pathname: "/machines", key: "testKey" }]}
@@ -41,13 +45,17 @@ describe("BridgeFormFields", () => {
         </MemoryRouter>
       </Provider>
     );
-    wrapper.find("input[name='bridge_stp']").simulate("change", {
-      target: {
-        name: "bridge_stp",
-        checked: true,
-      },
-    });
-    await waitForComponentToPaint(wrapper);
-    expect(wrapper.find("FormikField[name='bridge_fd']").exists()).toBe(true);
+
+    // const stp_button = screen.getByRole("checkbox", {
+    //   name: "[object Object]",
+    // });
+
+    const stp_button = screen.getByRole("checkbox");
+
+    await userEvent.click(stp_button);
+
+    await waitFor(() =>
+      expect(screen.getByLabelText("Forward delay (ms)")).toBeInTheDocument()
+    );
   });
 });
