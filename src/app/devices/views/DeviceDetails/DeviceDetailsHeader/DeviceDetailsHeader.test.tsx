@@ -1,4 +1,4 @@
-import { mount } from "enzyme";
+import { screen, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { CompatRouter } from "react-router-dom-v5-compat";
@@ -31,7 +31,7 @@ describe("DeviceDetailsHeader", () => {
   it("displays a spinner as the title if device has not loaded yet", () => {
     state.device.items = [];
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter>
           <CompatRouter>
@@ -45,16 +45,18 @@ describe("DeviceDetailsHeader", () => {
       </Provider>
     );
 
-    expect(wrapper.find("SectionHeader").prop("loading")).toBe(true);
-    expect(wrapper.find("SectionHeader").prop("subtitleLoading")).not.toBe(
-      true
-    );
+    expect(
+      screen.getByRole("heading", { name: "loading" })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Subtitle loading spinner")
+    ).not.toBeInTheDocument();
   });
 
   it("displays a spinner as the subtitle if loaded device is not the detailed type", () => {
     state.device.items = [deviceFactory({ system_id: "abc123" })];
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter>
           <CompatRouter>
@@ -68,8 +70,12 @@ describe("DeviceDetailsHeader", () => {
       </Provider>
     );
 
-    expect(wrapper.find("SectionHeader").prop("subtitleLoading")).toBe(true);
-    expect(wrapper.find("SectionHeader").prop("loading")).not.toBe(true);
+    expect(
+      screen.getByLabelText("Subtitle loading spinner")
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: "loading" })
+    ).not.toBeInTheDocument();
   });
 
   it("displays the device's FQDN once loaded", () => {
@@ -77,7 +83,7 @@ describe("DeviceDetailsHeader", () => {
       deviceDetailsFactory({ fqdn: "plot-device", system_id: "abc123" }),
     ];
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter>
           <CompatRouter>
@@ -90,14 +96,15 @@ describe("DeviceDetailsHeader", () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(wrapper.find("[data-testid='section-header-title']").text()).toBe(
-      "plot-device"
-    );
+
+    expect(
+      screen.getByRole("heading", { name: "plot-device" })
+    ).toBeInTheDocument();
   });
 
   it("displays action title if an action is selected", () => {
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter>
           <CompatRouter>
@@ -110,14 +117,13 @@ describe("DeviceDetailsHeader", () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(wrapper.find("[data-testid='section-header-title']").text()).toBe(
-      "Delete"
-    );
+
+    expect(screen.getByRole("heading", { name: "Delete" })).toBeInTheDocument();
   });
 
   it("displays the device name if an action is not selected", () => {
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter>
           <CompatRouter>
@@ -130,6 +136,8 @@ describe("DeviceDetailsHeader", () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(wrapper.find("[data-testid='DeviceName']").exists()).toBe(true);
+    expect(
+      screen.getByRole("heading", { name: /test-machine-([1-9]{1,}).maas/ })
+    ).toBeInTheDocument();
   });
 });

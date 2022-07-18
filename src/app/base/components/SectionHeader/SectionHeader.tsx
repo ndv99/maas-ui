@@ -35,6 +35,7 @@ const generateSubtitle = (
   if (subtitleLoading) {
     content = (
       <Spinner
+        aria-label="Subtitle loading spinner"
         className="u-text--muted"
         data-testid="section-header-subtitle-spinner"
         text="Loading..."
