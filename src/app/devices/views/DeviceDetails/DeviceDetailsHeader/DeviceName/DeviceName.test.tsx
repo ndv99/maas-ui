@@ -1,5 +1,5 @@
-import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
+import { screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { CompatRouter } from "react-router-dom-v5-compat";
@@ -18,7 +18,6 @@ import {
   powerTypesState as powerTypesStateFactory,
   rootState as rootStateFactory,
 } from "testing/factories";
-import { submitFormikForm } from "testing/utils";
 
 const mockStore = configureStore();
 
@@ -49,9 +48,9 @@ describe("DeviceName", () => {
     });
   });
 
-  it("can update a device with the new name and domain", () => {
+  it("can update a device with the new name and domain", async () => {
     const store = mockStore(state);
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <MemoryRouter
           initialEntries={[{ pathname: "/device/abc123", key: "testKey" }]}
@@ -66,12 +65,16 @@ describe("DeviceName", () => {
         </MemoryRouter>
       </Provider>
     );
-    act(() =>
-      submitFormikForm(wrapper, {
-        hostname: "new-lease",
-        domain: "99",
-      })
+
+    await userEvent.clear(screen.getByRole("textbox", { name: "Hostname" }));
+
+    await userEvent.type(
+      screen.getByRole("textbox", { name: "Hostname" }),
+      "new-lease"
     );
+
+    await userEvent.click(screen.getByRole("button", { name: "Save" }));
+
     expect(
       store.getActions().find((action) => action.type === "device/update")
     ).toStrictEqual({
