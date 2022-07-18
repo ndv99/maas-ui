@@ -23,7 +23,13 @@ describe("DeviceDetailsHeader", () => {
   beforeEach(() => {
     state = rootStateFactory({
       device: deviceStateFactory({
-        items: [deviceDetailsFactory({ system_id: "abc123" })],
+        items: [
+          deviceDetailsFactory({
+            fqdn: "test-machine-69.maas",
+            hostname: "test-machine-69",
+            system_id: "abc123",
+          }),
+        ],
       }),
     });
   });
@@ -137,7 +143,7 @@ describe("DeviceDetailsHeader", () => {
       </Provider>
     );
     expect(
-      screen.getByRole("heading", { name: /test-machine-([1-9]{1,}).maas/ })
+      screen.getByRole("heading", { name: "test-machine-69.maas" })
     ).toBeInTheDocument();
   });
 });
