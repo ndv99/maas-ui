@@ -14,7 +14,7 @@ import type {
 } from "app/store/device/types";
 import { isDeviceDetails } from "app/store/device/utils";
 import type { RootState } from "app/store/root/types";
-import { preparePayload } from "app/utils";
+import { preparePayload, toFormikNumber } from "app/utils";
 
 type Props = {
   closeForm: () => void;
@@ -46,6 +46,7 @@ const AddInterface = ({ closeForm, systemId }: Props): JSX.Element => {
     <div ref={onRenderRef}>
       <FormCard sidebar={false}>
         <InterfaceForm
+          aria-label="Add interface"
           closeForm={closeForm}
           onSaveAnalytics={{
             action: "Add interface",
@@ -57,6 +58,7 @@ const AddInterface = ({ closeForm, systemId }: Props): JSX.Element => {
             dispatch(deviceActions.cleanup());
             const payload = preparePayload({
               ...values,
+              subnet: toFormikNumber(values.subnet),
               system_id: device.system_id,
             }) as CreateInterfaceParams;
             dispatch(deviceActions.createInterface(payload));

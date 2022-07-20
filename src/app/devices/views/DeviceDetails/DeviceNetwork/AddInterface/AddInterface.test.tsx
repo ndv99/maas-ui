@@ -9,7 +9,7 @@ import configureStore from "redux-mock-store";
 import AddInterface from "./AddInterface";
 
 import { actions as deviceActions } from "app/store/device";
-// import deviceSelectors from "app/store/device/selectors";
+import deviceSelectors from "app/store/device/selectors";
 import { DeviceIpAssignment } from "app/store/device/types";
 import type { RootState } from "app/store/root/types";
 import {
@@ -98,7 +98,7 @@ describe("AddInterface", () => {
 
     await userEvent.selectOptions(
       screen.getByRole("combobox", { name: "Subnet" }),
-      "172.16.1.0/24 (subnet-2)"
+      "2"
     );
 
     await userEvent.type(
@@ -140,42 +140,70 @@ describe("AddInterface", () => {
     });
   });
 
-  // it("closes the form if there are no errors when creating the interface", () => {
-  //   const closeForm = jest.fn();
-  //   state.device.errors = null;
-  //   const store = mockStore(state);
-  //   const Proxy = ({ systemId = "abc123" }) => (
-  //     <Provider store={store}>
-  //       <MemoryRouter>
-  //         <CompatRouter>
-  //           <AddInterface closeForm={closeForm} systemId={systemId} />
-  //         </CompatRouter>
-  //       </MemoryRouter>
-  //     </Provider>
-  //   );
-  //   const wrapper = mount(<Proxy />);
-  //   const formValues = {
-  //     ip_address: "192.168.1.1",
-  //     ip_assignment: DeviceIpAssignment.STATIC,
-  //     mac_address: "11:22:33:44:55:66",
-  //     name: "eth123",
-  //     subnet: 2,
-  //     tags: ["tag1", "tag2"],
-  //   };
-  //   submitFormikForm(wrapper, formValues);
-  //   const creatingInterface = jest.spyOn(deviceSelectors, "getStatusForDevice");
-  //   creatingInterface.mockReturnValue(true);
-  //   // Make the component rerender with the new value.
-  //   store.dispatch({ type: "" });
-  //   wrapper.setProps({});
-  //   creatingInterface.mockReturnValue(false);
-  //   // Make the component rerender with the new value.
-  //   store.dispatch({ type: "" });
-  //   wrapper.setProps({});
-  //   expect(closeForm).toHaveBeenCalled();
-  // });
+  it("closes the form if there are no errors when creating the interface", async () => {
+    const closeForm = jest.fn();
+    state.device.errors = null;
+    const store = mockStore(state);
+    const Proxy = ({ systemId = "" }) => (
+      <Provider store={store}>
+        <MemoryRouter>
+          <CompatRouter>
+            <AddInterface closeForm={closeForm} systemId={systemId} />
+          </CompatRouter>
+        </MemoryRouter>
+      </Provider>
+    );
 
-  // it("does not close the form if there is an error when creating the interface", () => {
+    render(<Proxy systemId="abc123" />);
+
+    await userEvent.clear(screen.getByRole("textbox", { name: "Name" }));
+
+    await userEvent.type(
+      screen.getByRole("textbox", { name: "Name" }),
+      "eth123"
+    );
+
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: "IP assignment" }),
+      "static"
+    );
+
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: "Subnet" }),
+      "2"
+    );
+
+    await userEvent.type(
+      screen.getByRole("textbox", { name: "MAC address" }),
+      "11:22:33:44:55:66"
+    );
+
+    await userEvent.type(
+      screen.getByRole("textbox", { name: "IP address" }),
+      "192.168.1.1"
+    );
+
+    await userEvent.click(screen.getByRole("textbox", { name: "Tags" }));
+
+    await userEvent.keyboard("tag1{Enter}tag2{Enter}");
+
+    await userEvent.click(
+      screen.getByRole("button", { name: "Save interface" })
+    );
+
+    const creatingInterface = jest.spyOn(deviceSelectors, "getStatusForDevice");
+    creatingInterface.mockReturnValue(true);
+    // Make the component rerender with the new value.
+    store.dispatch({ type: "" });
+    creatingInterface.mockReturnValue(false);
+    // Make the component rerender with the new value.
+    store.dispatch({ type: "" });
+    await waitFor(() => {
+      expect(closeForm).toHaveBeenCalled();
+    });
+  });
+
+  // it("does not close the form if there is an error when creating the interface", async () => {
   //   const closeForm = jest.fn();
   //   state.device.errors = null;
   //   const store = mockStore(state);
@@ -188,16 +216,43 @@ describe("AddInterface", () => {
   //       </MemoryRouter>
   //     </Provider>
   //   );
-  //   const wrapper = mount(<Proxy />);
-  //   const formValues = {
-  //     ip_address: "192.168.1.1",
-  //     ip_assignment: DeviceIpAssignment.STATIC,
-  //     mac_address: "11:22:33:44:55:66",
-  //     name: "eth123",
-  //     subnet: 2,
-  //     tags: ["tag1", "tag2"],
-  //   };
-  //   submitFormikForm(wrapper, formValues);
+  //   render(<Proxy />);
+
+  //   await userEvent.clear(screen.getByRole("textbox", { name: "Name" }));
+
+  //   await userEvent.type(
+  //     screen.getByRole("textbox", { name: "Name" }),
+  //     "eth123"
+  //   );
+
+  //   await userEvent.selectOptions(
+  //     screen.getByRole("combobox", { name: "IP assignment" }),
+  //     "static"
+  //   );
+
+  //   await userEvent.selectOptions(
+  //     screen.getByRole("combobox", { name: "Subnet" }),
+  //     "2"
+  //   );
+
+  //   await userEvent.type(
+  //     screen.getByRole("textbox", { name: "MAC address" }),
+  //     "11:22:33:44:55:66"
+  //   );
+
+  //   await userEvent.type(
+  //     screen.getByRole("textbox", { name: "IP address" }),
+  //     "192.168.1.1"
+  //   );
+
+  //   await userEvent.click(screen.getByRole("textbox", { name: "Tags" }));
+
+  //   await userEvent.keyboard("tag1{Enter}tag2{Enter}");
+
+  //   await userEvent.click(
+  //     screen.getByRole("button", { name: "Save interface" })
+  //   );
+
   //   const errors = jest.spyOn(deviceSelectors, "eventErrorsForDevices");
   //   errors.mockReturnValue([
   //     deviceEventErrorFactory({
@@ -208,11 +263,9 @@ describe("AddInterface", () => {
   //   creatingInterface.mockReturnValue(true);
   //   // Make the component rerender with the new value.
   //   store.dispatch({ type: "" });
-  //   wrapper.setProps({});
   //   creatingInterface.mockReturnValue(false);
   //   // Make the component rerender with the new value.
   //   store.dispatch({ type: "" });
-  //   wrapper.setProps({});
   //   expect(closeForm).not.toHaveBeenCalled();
   // });
 
