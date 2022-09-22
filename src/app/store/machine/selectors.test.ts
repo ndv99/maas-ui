@@ -532,6 +532,19 @@ describe("machine selectors", () => {
     ).toStrictEqual(nic);
   });
 
+  it("can get machines by parent", () => {
+    const items = [
+      machineFactory({ parent: "abc" }),
+      machineFactory({ parent: "def" }),
+    ];
+    const state = rootStateFactory({
+      machine: machineStateFactory({
+        items,
+      }),
+    });
+    expect(machine.getByParent(state, "abc")).toStrictEqual([items[0]]);
+  });
+
   it("can get deployed machines by tag", () => {
     const items = [
       machineFactory({ status: NodeStatus.DISK_ERASING, tags: [1] }),
