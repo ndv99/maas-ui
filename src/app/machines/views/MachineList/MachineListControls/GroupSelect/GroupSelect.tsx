@@ -31,6 +31,10 @@ const groupOptions = [
     value: "zone",
     label: "Group by zone",
   },
+  {
+    value: "parent",
+    label: "Group by VM host",
+  },
 ];
 
 const GroupSelect = ({

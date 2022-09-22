@@ -425,6 +425,16 @@ const generateGroups = (
       .sort(simpleSortByKey("label"));
   }
 
+  if (grouping === "parent") {
+    const groupMap = groupAsMap(machines, (machine) => machine.parent);
+    return Array.from(groupMap)
+      .map(([label, machines]) => ({
+        label: label?.toString() || "No host",
+        machines,
+      }))
+      .sort(simpleSortByKey("label"));
+  }
+
   return null;
 };
 
@@ -681,15 +691,20 @@ export const MachineListTable = ({
       key: MachineColumns.STATUS,
       className: "status-col",
       content: (
-        <TableHeader
-          className="p-double-row__header-spacer"
-          currentSort={currentSort}
-          data-testid="status-header"
-          onClick={() => updateSort("status")}
-          sortKey="status"
-        >
-          {columnLabels[MachineColumns.STATUS]}
-        </TableHeader>
+        <>
+          <TableHeader
+            className="p-double-row__header-spacer"
+            currentSort={currentSort}
+            data-testid="status-header"
+            onClick={() => updateSort("status")}
+            sortKey="status"
+          >
+            {columnLabels[MachineColumns.STATUS]}
+          </TableHeader>
+          <TableHeader className="p-double-row__header-spacer">
+            Host
+          </TableHeader>
+        </>
       ),
     },
     {
