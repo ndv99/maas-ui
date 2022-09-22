@@ -251,6 +251,7 @@ export const machine = extend<BaseNode, Machine>(node, {
   node_type_display: NodeTypeDisplay.MACHINE,
   numa_nodes_count: 1,
   owner: "admin",
+  parent: "abcde",
   physical_disk_count: 1,
   pod: modelRef,
   power_state: PowerState.ON,

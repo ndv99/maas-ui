@@ -45,6 +45,7 @@ export type BaseMachine = BaseNode & {
   node_type_display: NodeTypeDisplay.MACHINE;
   numa_nodes_count: number;
   owner: string;
+  parent?: string;
   physical_disk_count: number;
   pod?: ModelRef;
   pool: ModelRef;
