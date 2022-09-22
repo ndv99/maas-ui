@@ -294,6 +294,20 @@ const getByStatusCode = createSelector(
 );
 
 /**
+ * Get the machines with a provided parent machine ID.
+ * @param state - The redux state.
+ * @param statusCode - A system_id for a parent machine.
+ * @returns The machines with a parent.
+ */
+const getByParent = createSelector(
+  [
+    defaultSelectors.all,
+    (_state: RootState, parentId: Machine["parent"]) => parentId,
+  ],
+  (machines, parentId) => machines.filter(({ parent }) => parent === parentId)
+);
+
+/**
  * Get the deployed machines with the provided tag.
  * @param state - The redux state.
  * @param tagId - The tag id.
@@ -334,6 +348,7 @@ const selectors = {
   eventErrorsForIds,
   exitingRescueMode: statusSelectors["exitingRescueMode"],
   getByStatusCode,
+  getByParent,
   getDeployedWithTag,
   getInterfaceById,
   getStatuses,
