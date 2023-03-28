@@ -23,7 +23,9 @@ export const MachinesHeader = ({
     <SectionHeader
       {...props}
       title={"title" in props && !!props.title ? props.title : ""}
-    />
+    >
+      {props.children}
+    </SectionHeader>
   );
 };
 

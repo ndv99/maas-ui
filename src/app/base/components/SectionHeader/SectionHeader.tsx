@@ -12,6 +12,7 @@ import type { DataTestElement } from "app/base/types";
 export type Props<P = LinkProps> = {
   actionMenuGroup?: JSX.Element | null;
   buttons?: JSX.Element[] | null;
+  children?: ReactNode;
   className?: ClassName;
   sidePanelContent?: ReactNode | null;
   sidePanelTitle?: string | null;
@@ -63,6 +64,7 @@ const generateSubtitle = (
 const SectionHeader = <P,>({
   actionMenuGroup,
   buttons = [],
+  children,
   className,
   sidePanelContent,
   sidePanelTitle,
@@ -123,6 +125,7 @@ const SectionHeader = <P,>({
             }))}
           />
         ) : null}
+        {children}
       </div>
       <AppSidePanel
         content={sidePanelContent}

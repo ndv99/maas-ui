@@ -90,32 +90,23 @@ export const MachineListHeader = ({
 
   return (
     <MachinesHeader
-      buttons={[
-        <h1
-          className="section-header__title p-heading--4"
-          data-testid="section-header-title"
-        >
-          {allMachineCount} machines in{" "}
-          <Link to={urls.pools.index}>
-            {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
-          </Link>
-        </h1>,
-        <MachineListControls
-          filter={searchFilter}
-          grouping={grouping}
-          hiddenColumns={hiddenColumns}
-          setFilter={handleSetSearchFilter}
-          setGrouping={setGrouping}
-          setHiddenColumns={setHiddenColumns}
-          setHiddenGroups={setHiddenGroups}
-          setSidePanelContent={setSidePanelContent}
-        />,
-        <AddHardwareMenu
-          disabled={hasSelection}
-          key="add-hardware"
-          setSidePanelContent={setSidePanelContent}
-        />,
-      ]}
+      // buttons={[
+      //   <MachineListControls
+      //     filter={searchFilter}
+      //     grouping={grouping}
+      //     hiddenColumns={hiddenColumns}
+      //     setFilter={handleSetSearchFilter}
+      //     setGrouping={setGrouping}
+      //     setHiddenColumns={setHiddenColumns}
+      //     setHiddenGroups={setHiddenGroups}
+      //     setSidePanelContent={setSidePanelContent}
+      //   />,
+      //   <AddHardwareMenu
+      //     disabled={hasSelection}
+      //     key="add-hardware"
+      //     setSidePanelContent={setSidePanelContent}
+      //   />,
+      // ]}
       machineCount={allMachineCount}
       sidePanelContent={
         sidePanelContent && (
@@ -133,16 +124,32 @@ export const MachineListHeader = ({
       sidePanelTitle={getHeaderTitle("Machines", sidePanelContent)}
       subtitleLoading={selectedCountLoading}
       title={
-        sidePanelContent ? (
-          <>
-            {allMachineCount} machines in{" "}
-            <Link to={urls.pools.index}>
-              {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
-            </Link>
-          </>
-        ) : null
+        <>
+          {allMachineCount} machines in{" "}
+          <Link to={urls.pools.index}>
+            {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
+          </Link>
+        </>
       }
-    />
+    >
+      <>
+        <MachineListControls
+          filter={searchFilter}
+          grouping={grouping}
+          hiddenColumns={hiddenColumns}
+          setFilter={handleSetSearchFilter}
+          setGrouping={setGrouping}
+          setHiddenColumns={setHiddenColumns}
+          setHiddenGroups={setHiddenGroups}
+          setSidePanelContent={setSidePanelContent}
+        />
+        <AddHardwareMenu
+          disabled={hasSelection}
+          key="add-hardware"
+          setSidePanelContent={setSidePanelContent}
+        />
+      </>
+    </MachinesHeader>
   );
 };
 

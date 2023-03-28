@@ -160,6 +160,10 @@
         align-items: center;
         flex-wrap: wrap;
 
+        .filter-accordion {
+          width: unset;
+        }
+
         .p-search-box, .p-form-validation__input, .p-button--link {
           margin-bottom: 0;
         }

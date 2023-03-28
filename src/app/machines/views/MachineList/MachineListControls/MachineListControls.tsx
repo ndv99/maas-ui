@@ -75,109 +75,97 @@ const MachineListControls = ({
   );
 
   return (
-    <Row className="machine-list-controls">
+    <div className="machine-list-controls u-flex">
       {!hasSelection ? (
         <>
-          <Col size={2}>
-            <MachinesFilterAccordion
-              searchText={searchText}
-              setSearchText={(searchText) => {
-                setFilter(searchText);
-              }}
-            />
-          </Col>
-          <Col size={5}>
-            <DebounceSearchBox
-              onDebounced={(debouncedText) => setFilter(debouncedText)}
-              searchText={searchText}
-              setSearchText={setSearchText}
-            />
-          </Col>
-          <Col size={3}>
-            <div className="u-flex--align-baseline">
-              <div className="u-flex--grow">
-                <GroupSelect
-                  grouping={grouping}
-                  setGrouping={setGrouping}
-                  setHiddenGroups={setHiddenGroups}
-                />
-              </div>
+          <MachinesFilterAccordion
+            searchText={searchText}
+            setSearchText={(searchText) => {
+              setFilter(searchText);
+            }}
+          />
+          <DebounceSearchBox
+            onDebounced={(debouncedText) => setFilter(debouncedText)}
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
+          <div className="u-flex--align-baseline">
+            <div className="u-flex--grow">
+              <GroupSelect
+                grouping={grouping}
+                setGrouping={setGrouping}
+                setHiddenGroups={setHiddenGroups}
+              />
             </div>
-          </Col>
+          </div>
         </>
       ) : (
         <>
-          <Col size={8}>
-            <NodeActionMenuGroup
-              alwaysShowLifecycle
-              excludeActions={[NodeActions.IMPORT_IMAGES]}
-              getTitle={getTitle}
-              hasSelection={hasSelection}
-              key="machine-list-action-menu"
-              nodeDisplay="machine"
-              onActionClick={(action) => {
-                if (action === NodeActions.TAG && !tagsSeen) {
-                  setTagsSeen(true);
-                }
-                const view = Object.values(MachineHeaderViews).find(
-                  ([, actionName]) => actionName === action
-                );
-                if (view) {
-                  setSidePanelContent({ view });
-                }
-                sendAnalytics(
-                  "Machine list action form",
-                  getNodeActionTitle(action),
-                  "Open"
-                );
-              }}
-            />
-            <NodeActionMenu
-              alwaysShowLifecycle
-              excludeActions={[NodeActions.IMPORT_IMAGES]}
-              getTitle={getTitle}
-              hasSelection={hasSelection}
-              key="machine-list-action-menu"
-              nodeDisplay="machine"
-              onActionClick={(action) => {
-                if (action === NodeActions.TAG && !tagsSeen) {
-                  setTagsSeen(true);
-                }
-                const view = Object.values(MachineHeaderViews).find(
-                  ([, actionName]) => actionName === action
-                );
-                if (view) {
-                  setSidePanelContent({ view });
-                }
-                sendAnalytics(
-                  "Machine list action form",
-                  getNodeActionTitle(action),
-                  "Open"
-                );
-              }}
-              toggleAppearance=""
-              toggleClassName="p-action-menu filter-accordion__toggle u-no-margin--bottom"
-              toggleLabel="Menu"
-            />
-          </Col>
-          <Col className="u-flex--center" size={2}>
-            <Button
-              appearance="link"
-              onClick={() => dispatch(machineActions.setSelectedMachines(null))}
-            >
-              Clear selection <Icon name="close-link" />
-            </Button>
-          </Col>
+          <NodeActionMenuGroup
+            alwaysShowLifecycle
+            excludeActions={[NodeActions.IMPORT_IMAGES]}
+            getTitle={getTitle}
+            hasSelection={hasSelection}
+            key="machine-list-action-menu"
+            nodeDisplay="machine"
+            onActionClick={(action) => {
+              if (action === NodeActions.TAG && !tagsSeen) {
+                setTagsSeen(true);
+              }
+              const view = Object.values(MachineHeaderViews).find(
+                ([, actionName]) => actionName === action
+              );
+              if (view) {
+                setSidePanelContent({ view });
+              }
+              sendAnalytics(
+                "Machine list action form",
+                getNodeActionTitle(action),
+                "Open"
+              );
+            }}
+          />
+          <NodeActionMenu
+            alwaysShowLifecycle
+            excludeActions={[NodeActions.IMPORT_IMAGES]}
+            getTitle={getTitle}
+            hasSelection={hasSelection}
+            key="machine-list-action-menu"
+            nodeDisplay="machine"
+            onActionClick={(action) => {
+              if (action === NodeActions.TAG && !tagsSeen) {
+                setTagsSeen(true);
+              }
+              const view = Object.values(MachineHeaderViews).find(
+                ([, actionName]) => actionName === action
+              );
+              if (view) {
+                setSidePanelContent({ view });
+              }
+              sendAnalytics(
+                "Machine list action form",
+                getNodeActionTitle(action),
+                "Open"
+              );
+            }}
+            toggleAppearance=""
+            toggleClassName="p-action-menu filter-accordion__toggle u-no-margin--bottom"
+            toggleLabel="Menu"
+          />
+          <Button
+            appearance="link"
+            onClick={() => dispatch(machineActions.setSelectedMachines(null))}
+          >
+            Clear selection <Icon name="close-link" />
+          </Button>
         </>
       )}
 
-      <Col size={2}>
-        <HiddenColumnsSelect
-          hiddenColumns={hiddenColumns}
-          setHiddenColumns={setHiddenColumns}
-        />
-      </Col>
-    </Row>
+      <HiddenColumnsSelect
+        hiddenColumns={hiddenColumns}
+        setHiddenColumns={setHiddenColumns}
+      />
+    </div>
   );
 };
 
