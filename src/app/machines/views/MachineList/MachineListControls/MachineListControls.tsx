@@ -106,7 +106,6 @@ const MachineListControls = ({
             excludeActions={[NodeActions.IMPORT_IMAGES]}
             getTitle={getTitle}
             hasSelection={hasSelection}
-            key="machine-list-action-menu"
             nodeDisplay="machine"
             onActionClick={(action) => {
               if (action === NodeActions.TAG && !tagsSeen) {
@@ -130,7 +129,6 @@ const MachineListControls = ({
             excludeActions={[NodeActions.IMPORT_IMAGES]}
             getTitle={getTitle}
             hasSelection={hasSelection}
-            key="machine-list-action-menu"
             nodeDisplay="machine"
             onActionClick={(action) => {
               if (action === NodeActions.TAG && !tagsSeen) {

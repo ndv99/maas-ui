@@ -124,12 +124,14 @@ export const MachineListHeader = ({
       sidePanelTitle={getHeaderTitle("Machines", sidePanelContent)}
       subtitleLoading={selectedCountLoading}
       title={
-        <>
-          {allMachineCount} machines in{" "}
-          <Link to={urls.pools.index}>
-            {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
-          </Link>
-        </>
+        sidePanelContent ? (
+          <>
+            {allMachineCount} machines in{" "}
+            <Link to={urls.pools.index}>
+              {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
+            </Link>
+          </>
+        ) : null
       }
     >
       <>

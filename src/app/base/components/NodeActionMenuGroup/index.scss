@@ -11,8 +11,8 @@
     }
 
     .p-button, .p-switch {
-      margin: calc(0.4rem - 1px) 0;
-      padding: 0 $spv--large;
+      margin-bottom: 0;
+      padding: $input-vertical-padding $spv--large;
       border: 0;
     }
 
