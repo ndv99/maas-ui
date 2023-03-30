@@ -134,10 +134,11 @@
 
   .section-header__main-row {
 
-    .section-header__buttons {
       display: flex;
       align-items: flex-start;
+      justify-content: space-between;
       flex-wrap: wrap;
+      grid-gap: 0.5rem;
 
       @media screen and (max-width: ($breakpoint-node-action-menu-group - 1)) {
         .p-node-action-menu-group, .p-add-hardware-dropdown {
@@ -153,7 +154,7 @@
 
       .machine-list-controls {
         grid-gap: 0.5rem;
-        align-items: center;
+        align-items: flex-start;
         flex-wrap: wrap;
 
         .filter-accordion {
@@ -172,7 +173,6 @@
       .p-contextual-menu__toggle {
         margin-bottom: 0;
       }
-    }
   }
 
   .hidden-columns-select-wrapper {

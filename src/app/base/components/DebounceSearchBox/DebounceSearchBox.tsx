@@ -39,39 +39,37 @@ const DebounceSearchBox = ({
   }, []);
 
   return (
-    <div className="u-flex">
-      <div className="debounce-search-box u-flex--grow">
-        <SearchBox
-          {...props}
-          externallyControlled
-          onChange={(text: string) => {
-            onChange?.(text);
-            setDebouncing(true);
-            setSearchText(text);
-            // Clear the previous timeout.
-            if (intervalRef.current) {
-              clearTimeout(intervalRef.current);
-            }
-            intervalRef.current = setTimeout(() => {
-              onDebounced(text);
-              setDebouncing(false);
-            }, debounceInterval);
-          }}
-          value={searchText}
-        />
-        {debouncing && (
-          <div
-            aria-label={Labels.Loading}
-            className={classNames(
-              "debounce-search-box__spinner-container u-vertically-center",
-              { "nudge-left": !!searchText }
-            )}
-            role="alert"
-          >
-            <Icon className="u-animation--spin" name="spinner" />
-          </div>
-        )}
-      </div>
+    <div className="debounce-search-box">
+      <SearchBox
+        {...props}
+        externallyControlled
+        onChange={(text: string) => {
+          onChange?.(text);
+          setDebouncing(true);
+          setSearchText(text);
+          // Clear the previous timeout.
+          if (intervalRef.current) {
+            clearTimeout(intervalRef.current);
+          }
+          intervalRef.current = setTimeout(() => {
+            onDebounced(text);
+            setDebouncing(false);
+          }, debounceInterval);
+        }}
+        value={searchText}
+      />
+      {debouncing && (
+        <div
+          aria-label={Labels.Loading}
+          className={classNames(
+            "debounce-search-box__spinner-container u-vertically-center",
+            { "nudge-left": !!searchText }
+          )}
+          role="alert"
+        >
+          <Icon className="u-animation--spin" name="spinner" />
+        </div>
+      )}
     </div>
   );
 };

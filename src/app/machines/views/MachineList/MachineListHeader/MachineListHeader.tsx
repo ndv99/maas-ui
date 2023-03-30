@@ -123,18 +123,25 @@ export const MachineListHeader = ({
       }
       sidePanelTitle={getHeaderTitle("Machines", sidePanelContent)}
       subtitleLoading={selectedCountLoading}
-      title={
-        sidePanelContent ? (
-          <>
-            {allMachineCount} machines in{" "}
-            <Link to={urls.pools.index}>
-              {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
-            </Link>
-          </>
-        ) : null
-      }
+      // title={
+      //   <>
+      //     {allMachineCount} machines in{" "}
+      //     <Link to={urls.pools.index}>
+      //       {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
+      //     </Link>
+      //   </>
+      // }
     >
       <>
+        <h1
+          className="section-header__title u-flex--no-shrink p-heading--4"
+          data-testid="section-header-title"
+        >
+          {allMachineCount} machines in{" "}
+          <Link to={urls.pools.index}>
+            {resourcePoolsCount} {pluralize("pool", resourcePoolsCount)}
+          </Link>
+        </h1>
         <MachineListControls
           filter={searchFilter}
           grouping={grouping}

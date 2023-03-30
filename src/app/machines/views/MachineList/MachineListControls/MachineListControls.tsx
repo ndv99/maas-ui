@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Button, Col, Icon, Row } from "@canonical/react-components";
+import { Button, Icon } from "@canonical/react-components";
 import { useDispatch } from "react-redux";
 import { useStorageState } from "react-storage-hooks";
 
@@ -90,13 +90,11 @@ const MachineListControls = ({
             setSearchText={setSearchText}
           />
           <div className="u-flex--align-baseline">
-            <div className="u-flex--grow">
-              <GroupSelect
-                grouping={grouping}
-                setGrouping={setGrouping}
-                setHiddenGroups={setHiddenGroups}
-              />
-            </div>
+            <GroupSelect
+              grouping={grouping}
+              setGrouping={setGrouping}
+              setHiddenGroups={setHiddenGroups}
+            />
           </div>
         </>
       ) : (
