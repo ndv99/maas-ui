@@ -24,6 +24,7 @@ type UploadScript = {
 const BAKERY_LOGIN_API = "/MAAS/accounts/discharge-request/";
 export const SERVICE_API = "/MAAS/a/v2/";
 export const ROOT_API = "/MAAS/api/2.0/";
+export const V3_API = "/MAAS/a/v3/";
 const SCRIPTS_API = `${ROOT_API}scripts/`;
 const LICENSE_KEY_API = `${ROOT_API}license-key/`;
 const LICENSE_KEYS_API = `${ROOT_API}license-keys/`;

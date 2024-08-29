@@ -1,6 +1,9 @@
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryKeys = {
+  resourcepools: {
+    list: ["resourcepools"],
+  },
   zones: {
     list: ["zones"],
   },

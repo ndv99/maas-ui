@@ -37,6 +37,7 @@ export const useWebSocket = () => {
 };
 
 const wsToQueryKeyMapping: Partial<Record<WebSocketEndpointModel, string>> = {
+  resourcepool: "resourcepools",
   zone: "zones",
   // Add more mappings as needed
 } as const;
