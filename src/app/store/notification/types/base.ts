@@ -7,7 +7,7 @@ import type { User } from "@/app/store/user/types";
 
 export type Notification = TimestampedModel & {
   ident: NotificationIdent | string;
-  user: User;
+  user: User | null;
   users: boolean;
   admins: boolean;
   message: string;

@@ -13,6 +13,8 @@ import messageSelectors from "@/app/store/message/selectors";
 import type { Message } from "@/app/store/message/types";
 import { notificationActions } from "@/app/store/notification";
 import notificationSelectors from "@/app/store/notification/selectors";
+import { NotificationCategory } from "@/app/store/notification/types";
+import type { UtcDatetime } from "@/app/store/types/model";
 
 const Messages = ({ messages }: { messages: Message[] }) => {
   const dispatch = useDispatch();
@@ -66,9 +68,65 @@ const NotificationList = (): JSX.Element => {
   const notificationCount = useSelector(notificationSelectors.count);
   const hasContent = messageCount > 0 || notificationCount > 0;
 
+  const fakeNotifications = {
+    warnings: {
+      severity: NotificationSeverity.CAUTION,
+      items: [
+        {
+          id: 1,
+          user: null,
+          users: true,
+          admins: true,
+          ident: NotificationCategory.WARNING,
+          message: "This is a warning",
+          category: NotificationCategory.WARNING,
+          dismissable: true,
+          created: "2021-09-01T00:00:00Z" as UtcDatetime,
+          updated: "2021-09-01T00:00:00Z" as UtcDatetime,
+        },
+        {
+          id: 2,
+          user: null,
+          users: true,
+          admins: true,
+          ident: NotificationCategory.WARNING,
+          message: "This is a warning",
+          category: NotificationCategory.WARNING,
+          dismissable: true,
+          created: "2021-09-01T00:00:00Z" as UtcDatetime,
+          updated: "2021-09-01T00:00:00Z" as UtcDatetime,
+        },
+        {
+          id: 3,
+          user: null,
+          users: true,
+          admins: true,
+          ident: NotificationCategory.WARNING,
+          message: "This is a warning",
+          category: NotificationCategory.WARNING,
+          dismissable: true,
+          created: "2021-09-01T00:00:00Z" as UtcDatetime,
+          updated: "2021-09-01T00:00:00Z" as UtcDatetime,
+        },
+      ],
+    },
+    errors: {
+      items: [],
+      severity: NotificationSeverity.NEGATIVE,
+    },
+    success: {
+      items: [],
+      severity: NotificationSeverity.POSITIVE,
+    },
+    info: {
+      items: [],
+      severity: NotificationSeverity.INFORMATION,
+    },
+  };
+
   return (
     <div className={classNames({ "u-nudge-down": hasContent })}>
-      {Object.values(notifications).map((group) => {
+      {Object.values(fakeNotifications).map((group) => {
         const items = group.items;
         const severity = group.severity;
         if (items.length > 1) {
