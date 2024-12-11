@@ -2,9 +2,8 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import ScriptDetails from ".";
-
 import FileContext, { fileContextStore } from "@/app/base/file-context";
+import ScriptDetails from "@/app/settings/views/Scripts/ScriptDetails/ScriptDetails.js";
 import type { RootState } from "@/app/store/root/types";
 import { ScriptType } from "@/app/store/script/types";
 import * as factory from "@/testing/factories";
